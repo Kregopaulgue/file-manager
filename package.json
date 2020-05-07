@@ -1,0 +1,30 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "File manger as diploma work",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kregopaulgue/file-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kregopaulgue/file-manager/issues"
+  },
+  "homepage": "https://github.com/Kregopaulgue/file-manager#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.12",
+    "node": "^14.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
