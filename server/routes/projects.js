@@ -20,7 +20,8 @@ router.post('/create',
             });
         }
 
-        const { userId, title, description, folder } = req.body;
+        const { userId, title, description } = req.body;
+        let { folder } = req.body;
 
         try {
             const projectOwner = await UserModel.findOne({ _id: userId });
@@ -102,10 +103,11 @@ router.put('/:projectId',
         }
 
         const projectId = req.params.projectId;
-        const { userId, title, description } = req.body;
+        const { userId, title, description, folder } = req.body;
 
         try {
-            const projectToUpdate = ProjectModel.findById(projectId);
+            const projectToUpdate = await ProjectModel.findById(projectId);
+
             if(!projectToUpdate) {
                 return res.status(404).json({
                     message: 'Project was not found!'
@@ -115,6 +117,7 @@ router.put('/:projectId',
             projectToUpdate.userId = userId;
             projectToUpdate.title = title;
             projectToUpdate.description = description;
+            projectToUpdate.folder = folder;
 
             await projectToUpdate.save();
 
