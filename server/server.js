@@ -1,9 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const { initiateMongoServer } = require('./config/db.js');
+
+const UsersRouter = require('./routes/users.js');
+
+initiateMongoServer();
+
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use('/users/', UsersRouter);
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'));
