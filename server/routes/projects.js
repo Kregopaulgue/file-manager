@@ -1,11 +1,16 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 
 const { ProjectModel } = require('./../models/Project.js');
 const { UserModel } = require('./../models/User.js');
+const { FileModel } = require('./../models/File.js');
+const { TagModel } = require('./../models/Tag.js');
+const { ProjectTagModel } = require('./../models/ProjectTag.js');
+const { FileTagModel } = require('./../models/FileTag.js');
 
 router.post('/create', 
     [
@@ -56,14 +61,35 @@ router.get('/:projectId',
         }
 
         try {
-            const project = await ProjectModel.findOne({ _id: projectId });
+            const project = await ProjectModel.findById(projectId);
             if(!project) {
                 return res.status(404).json({
                     message: 'No project with specified id is found'
                 });
             }
+            let files = await FileModel.find({ project: projectId });
+            files = files.map(file => file.toObject());
+            for(let i = 0; i < files.length; i++) {
+                const fileTags = await FileTagModel.find({ file: files[i]._id });
+                const actualTags = await TagModel.find({ _id: { $in: fileTags.map(tmp => tmp.tag) } });
+                files[i].tags = actualTags;
+            }
 
-            const payload = { project };
+            const projectTagsIds = await ProjectTagModel.find({ project: projectId });
+            const tagsIds = projectTagsIds.map(projTag => new mongoose.Types.ObjectId(projTag.tag));
+            console.log(tagsIds);
+
+            const tags = await TagModel.find({ _id: {
+                $in: tagsIds
+            }});
+
+            const resultProject = {
+                ...project.toObject(),
+                files,
+                tags
+            };
+
+            const payload = { project: resultProject };
             res.status(200).json(payload);
         } catch(error) {
             console.log(error);

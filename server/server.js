@@ -5,6 +5,8 @@ const { initiateMongoServer } = require('./config/db.js');
 
 const UsersRouter = require('./routes/users.js');
 const ProjectsRouter = require('./routes/projects.js');
+const TagsRouter = require('./routes/tags.js');
+const FilesRouter = require('./routes/files.js');
 
 initiateMongoServer();
 
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 
 app.use('/users/', UsersRouter);
 app.use('/projects/', ProjectsRouter);
+app.use('/tags/', TagsRouter);
+app.use('/files/', FilesRouter);
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'));
