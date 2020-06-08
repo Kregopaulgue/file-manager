@@ -8,6 +8,11 @@ export class ProjectsModel extends ApiModel {
 
         this.id = id;
 
+        this.getModelRequest = this.getModelRequest.bind(this);
+        this.getAllProjects = this.getAllProjects.bind(this);
+        this.getProjectById = this.getProjectById.bind(this);
+        this.createProject = this.createProject.bind(this); 
+
         this.modelRequest = this.getModelRequest();
         this.modelBaseUrl = this._buildUrl();
     }
