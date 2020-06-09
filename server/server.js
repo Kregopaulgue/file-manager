@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const { initiateMongoServer } = require('./config/db.js');
 
@@ -13,6 +14,7 @@ initiateMongoServer();
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use('/users/', UsersRouter);
 app.use('/projects/', ProjectsRouter);

@@ -26,7 +26,7 @@ class ApiModel {
     }
 
     _buildUrl() {
-        return `${ApiModel.protocol}${ApiModel.host}${ApiModel.port ? ':' + ApiModel.port : ''}${this.modelRequest}`;
+        return `http://localhost:5000${this.modelRequest}`;
     }
 
     _buildUrlWithParams(params, insertSlash) {

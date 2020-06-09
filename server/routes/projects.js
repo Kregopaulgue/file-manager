@@ -12,7 +12,7 @@ const { TagModel } = require('./../models/Tag.js');
 const { ProjectTagModel } = require('./../models/ProjectTag.js');
 const { FileTagModel } = require('./../models/FileTag.js');
 
-router.post('/create', 
+router.post('/', 
     [
         check('userId', 'User is not defined!').not().isEmpty(),
         check('title', 'Title is missing!').not().isEmpty()
